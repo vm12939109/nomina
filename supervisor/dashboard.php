@@ -9,8 +9,13 @@ if (!isLoggedIn() || !hasRole('supervisor')) {
     redirect('../login.php');
 }
 
-// Supervisor solo visualiza empleados
-$stmt = $pdo->prepare("SELECT u.* FROM usuarios u JOIN roles r ON u.rol_id = r.id WHERE r.nombre = 'empleado'");
+// Supervisor solo visualiza empleados con info de cargo y depto
+$stmt = $pdo->prepare("SELECT u.*, d.nombre as dept_nombre, c.nombre as cargo_nombre
+                       FROM usuarios u
+                       JOIN roles r ON u.rol_id = r.id
+                       LEFT JOIN departamentos d ON u.departamento_id = d.id
+                       LEFT JOIN cargos c ON u.cargo_id = c.id
+                       WHERE r.nombre = 'empleado'");
 $stmt->execute();
 $empleados = $stmt->fetchAll();
 ?>
@@ -53,6 +58,8 @@ $empleados = $stmt->fetchAll();
                         <tr>
                             <th>Cédula</th>
                             <th>Nombre Completo</th>
+                            <th>Departamento</th>
+                            <th>Cargo</th>
                             <th>Email</th>
                             <th>Estado</th>
                         </tr>
@@ -62,6 +69,8 @@ $empleados = $stmt->fetchAll();
                             <tr>
                                 <td><?php echo sanitize($e['cedula']); ?></td>
                                 <td><?php echo sanitize($e['nombre']) . ' ' . sanitize($e['apellido']); ?></td>
+                                <td><?php echo sanitize($e['dept_nombre'] ?? 'N/A'); ?></td>
+                                <td><?php echo sanitize($e['cargo_nombre'] ?? 'N/A'); ?></td>
                                 <td><?php echo sanitize($e['email']); ?></td>
                                 <td><span class="badge bg-success">Activo</span></td>
                             </tr>

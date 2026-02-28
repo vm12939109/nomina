@@ -52,4 +52,26 @@ function getRoleName($pdo, $role_id) {
     $role = $stmt->fetch();
     return $role ? $role['nombre'] : 'Desconocido';
 }
+
+/**
+ * Obtener nombre del departamento por ID
+ */
+function getDepartmentName($pdo, $dept_id) {
+    if (!$dept_id) return 'N/A';
+    $stmt = $pdo->prepare("SELECT nombre FROM departamentos WHERE id = ?");
+    $stmt->execute([$dept_id]);
+    $dept = $stmt->fetch();
+    return $dept ? $dept['nombre'] : 'Desconocido';
+}
+
+/**
+ * Obtener nombre del cargo por ID
+ */
+function getPositionName($pdo, $cargo_id) {
+    if (!$cargo_id) return 'N/A';
+    $stmt = $pdo->prepare("SELECT nombre FROM cargos WHERE id = ?");
+    $stmt->execute([$cargo_id]);
+    $cargo = $stmt->fetch();
+    return $cargo ? $cargo['nombre'] : 'Desconocido';
+}
 ?>

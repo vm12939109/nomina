@@ -13,8 +13,12 @@ if (!isLoggedIn()) {
 
 $usuario_id = isset($_GET['id']) ? (int)$_GET['id'] : $_SESSION['user_id'];
 
-// Obtener datos del usuario
-$stmt = $pdo->prepare("SELECT * FROM usuarios WHERE id = ?");
+// Obtener datos del usuario con cargo y depto
+$stmt = $pdo->prepare("SELECT u.*, d.nombre as dept_nombre, c.nombre as cargo_nombre
+                       FROM usuarios u
+                       LEFT JOIN departamentos d ON u.departamento_id = d.id
+                       LEFT JOIN cargos c ON u.cargo_id = c.id
+                       WHERE u.id = ?");
 $stmt->execute([$usuario_id]);
 $user = $stmt->fetch();
 
@@ -22,10 +26,10 @@ if (!$user) {
     die("Usuario no encontrado.");
 }
 
-// Simulamos que estamos generando un pago de 15 días con un sueldo base de 5000 Bs.
-$sueldoBaseSimulado = 5000.00;
+// Usamos el sueldo base real del usuario
+$sueldoBaseReal = $user['sueldo_base'] > 0 ? $user['sueldo_base'] : 5000.00;
 $diasSimulados = 15;
-$calculos = calcularNomina($sueldoBaseSimulado, $diasSimulados);
+$calculos = calcularNomina($sueldoBaseReal, $diasSimulados);
 
 // Intentar persistir en la base de datos si es una generación real (simplificado)
 $stmtCheck = $pdo->prepare("SELECT id FROM nomina WHERE usuario_id = ? AND fecha_pago = ?");
@@ -57,6 +61,8 @@ $pdf->Ln(10);
 $pdf->SetFont('Arial', '', 12);
 $pdf->Cell(95, 10, 'Empleado: ' . $user['nombre'] . ' ' . $user['apellido'], 0, 0);
 $pdf->Cell(95, 10, 'Cedula: ' . $user['cedula'], 0, 1);
+$pdf->Cell(95, 10, 'Departamento: ' . ($user['dept_nombre'] ?? 'N/A'), 0, 0);
+$pdf->Cell(95, 10, 'Cargo: ' . ($user['cargo_nombre'] ?? 'N/A'), 0, 1);
 $pdf->Cell(95, 10, 'Fecha: ' . date('d/m/Y'), 0, 0);
 $pdf->Cell(95, 10, 'Ciclo: ' . $diasSimulados . ' dias', 0, 1);
 $pdf->Ln(10);

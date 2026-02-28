@@ -9,8 +9,12 @@ if (!isLoggedIn() || !hasRole('administrador')) {
     redirect('../login.php');
 }
 
-// Obtener lista de usuarios para gestión
-$stmt = $pdo->query("SELECT u.*, r.nombre as rol_nombre FROM usuarios u JOIN roles r ON u.rol_id = r.id");
+// Obtener lista de usuarios para gestión con info extra
+$stmt = $pdo->query("SELECT u.*, r.nombre as rol_nombre, d.nombre as dept_nombre, c.nombre as cargo_nombre
+                     FROM usuarios u
+                     JOIN roles r ON u.rol_id = r.id
+                     LEFT JOIN departamentos d ON u.departamento_id = d.id
+                     LEFT JOIN cargos c ON u.cargo_id = c.id");
 $usuarios = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -47,8 +51,9 @@ $usuarios = $stmt->fetchAll();
                 <tr>
                     <th>Cédula</th>
                     <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
+                    <th>Departamento</th>
+                    <th>Cargo</th>
+                    <th>Sueldo Base</th>
                     <th>Rol</th>
                     <th>Acciones</th>
                 </tr>
@@ -57,9 +62,10 @@ $usuarios = $stmt->fetchAll();
                 <?php foreach ($usuarios as $u): ?>
                     <tr>
                         <td><?php echo sanitize($u['cedula']); ?></td>
-                        <td><?php echo sanitize($u['nombre']); ?></td>
-                        <td><?php echo sanitize($u['apellido']); ?></td>
-                        <td><?php echo sanitize($u['email']); ?></td>
+                        <td><?php echo sanitize($u['nombre']) . ' ' . sanitize($u['apellido']); ?></td>
+                        <td><?php echo sanitize($u['dept_nombre'] ?? 'N/A'); ?></td>
+                        <td><?php echo sanitize($u['cargo_nombre'] ?? 'N/A'); ?></td>
+                        <td><?php echo formatCurrency($u['sueldo_base']); ?></td>
                         <td><span class="badge bg-info text-dark"><?php echo ucfirst(sanitize($u['rol_nombre'])); ?></span></td>
                         <td>
                             <button class="btn btn-sm btn-warning">Editar</button>

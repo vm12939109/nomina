@@ -10,6 +10,15 @@ if (!isLoggedIn() || !hasRole('empleado')) {
 }
 
 $user_id = $_SESSION['user_id'];
+// Obtener info del empleado
+$stmtUser = $pdo->prepare("SELECT u.*, d.nombre as dept_nombre, c.nombre as cargo_nombre
+                           FROM usuarios u
+                           LEFT JOIN departamentos d ON u.departamento_id = d.id
+                           LEFT JOIN cargos c ON u.cargo_id = c.id
+                           WHERE u.id = ?");
+$stmtUser->execute([$user_id]);
+$empleado = $stmtUser->fetch();
+
 $stmt = $pdo->prepare("SELECT * FROM nomina WHERE usuario_id = ? ORDER BY fecha_pago DESC");
 $stmt->execute([$user_id]);
 $nominas = $stmt->fetchAll();
@@ -43,7 +52,14 @@ $nominas = $stmt->fetchAll();
 <div class="container mt-5">
     <div class="card shadow">
         <div class="card-body">
-            <h3>Mis Comprobantes de Pago</h3>
+            <h3>Bienvenido, <?php echo sanitize($empleado['nombre'] . ' ' . $empleado['apellido']); ?></h3>
+            <p class="text-muted">
+                <strong>Departamento:</strong> <?php echo sanitize($empleado['dept_nombre'] ?? 'N/A'); ?> |
+                <strong>Cargo:</strong> <?php echo sanitize($empleado['cargo_nombre'] ?? 'N/A'); ?> |
+                <strong>Sueldo Base:</strong> <?php echo formatCurrency($empleado['sueldo_base']); ?>
+            </p>
+            <hr>
+            <h4>Mis Comprobantes de Pago</h4>
             <p>Aquí puede visualizar y descargar sus bauches de pago históricos.</p>
 
             <div class="table-responsive mt-4">
