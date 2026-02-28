@@ -1,0 +1,25 @@
+[Sat Feb 28 13:05:03 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Sat Feb 28 13:05:48 2026] [::1]:36678 Accepted
+[Sat Feb 28 13:05:48 2026] [::1]:36678 [200]: GET /index.php
+[Sat Feb 28 13:05:48 2026] [::1]:36678 Closing
+[Sat Feb 28 13:05:48 2026] [::1]:36690 Accepted
+[Sat Feb 28 13:05:48 2026] [::1]:36690 [404]: GET /assets/css/style.css - No such file or directory
+[Sat Feb 28 13:05:48 2026] [::1]:36690 Closing
+[Sat Feb 28 13:05:49 2026] [::1]:36702 Accepted
+[Sat Feb 28 13:05:49 2026] [::1]:36702 [200]: GET /login.php
+[Sat Feb 28 13:05:49 2026] [::1]:36702 Closing
+[Sat Feb 28 13:05:49 2026] [::1]:36704 Accepted
+[Sat Feb 28 13:05:49 2026] [::1]:36704 [200]: GET /register.php
+[Sat Feb 28 13:05:49 2026] [::1]:36704 Closing
+[Sat Feb 28 13:08:36 2026] [::1]:54036 Accepted
+[Sat Feb 28 13:08:36 2026] [::1]:54036 [200]: GET /index.php
+[Sat Feb 28 13:08:36 2026] [::1]:54036 Closing
+[Sat Feb 28 13:08:36 2026] [::1]:54038 Accepted
+[Sat Feb 28 13:08:36 2026] [::1]:54038 [404]: GET /assets/css/style.css - No such file or directory
+[Sat Feb 28 13:08:36 2026] [::1]:54038 Closing
+[Sat Feb 28 13:08:37 2026] [::1]:54048 Accepted
+[Sat Feb 28 13:08:37 2026] [::1]:54048 [200]: GET /login.php
+[Sat Feb 28 13:08:37 2026] [::1]:54048 Closing
+[Sat Feb 28 13:08:37 2026] [::1]:54056 Accepted
+[Sat Feb 28 13:08:37 2026] [::1]:54056 [200]: GET /register.php
+[Sat Feb 28 13:08:37 2026] [::1]:54056 Closing
