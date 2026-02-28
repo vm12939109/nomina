@@ -35,3 +35,15 @@
 [Sat Feb 28 13:39:07 2026] [::1]:56404 Accepted
 [Sat Feb 28 13:39:07 2026] [::1]:56404 [200]: GET /register.php
 [Sat Feb 28 13:39:07 2026] [::1]:56404 Closing
+[Sat Feb 28 13:45:25 2026] [::1]:37396 Accepted
+[Sat Feb 28 13:45:25 2026] [::1]:37396 [200]: GET /index.php
+[Sat Feb 28 13:45:25 2026] [::1]:37396 Closing
+[Sat Feb 28 13:45:25 2026] [::1]:37408 Accepted
+[Sat Feb 28 13:45:25 2026] [::1]:37408 [404]: GET /assets/css/style.css - No such file or directory
+[Sat Feb 28 13:45:25 2026] [::1]:37408 Closing
+[Sat Feb 28 13:45:26 2026] [::1]:37420 Accepted
+[Sat Feb 28 13:45:26 2026] [::1]:37420 [200]: GET /login.php
+[Sat Feb 28 13:45:26 2026] [::1]:37420 Closing
+[Sat Feb 28 13:45:26 2026] [::1]:37434 Accepted
+[Sat Feb 28 13:45:26 2026] [::1]:37434 [200]: GET /register.php
+[Sat Feb 28 13:45:26 2026] [::1]:37434 Closing
